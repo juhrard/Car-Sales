@@ -26,14 +26,22 @@ export const carReducer = (state = initialState, action) => {
         additionalPrice: state.additionalPrice - action.payload.price
       }
     case 'BUY_ITEM':
-      return {
-        ...state,
-        car: {...state.car,
-          features: [...state.car.features, action.payload]
-        },
-        additionalPrice: state.additionalPrice + action.payload.price
+      if(!state.car.features.includes(action.payload)) {
+        return {
+          ...state,
+          car: {...state.car,
+            features: [...state.car.features, action.payload]
+          },
+          additionalPrice: state.additionalPrice + action.payload.price
+        }
+      } else {
+        return {
+          ...state
+        }
       }
     default:
       return state;
   }
 }
+
+// [...state.car.features, action.payload]
